@@ -1,0 +1,14 @@
+# Projects drawn on the code map in the profile header.
+# Blocks are sized by the bytes of code GitHub reports for each repository.
+
+title = "thanaton20"
+
+[[project]]
+repo = "lod-qa/lodqa"
+label = "LODQA"
+note = "team of 5 · 1st place, IBM Qiskit Fall Fest 2026"
+
+[[project]]
+repo = "thanaton20/diskscape"
+label = "Diskscape"
+note = "disk usage analyzer"
