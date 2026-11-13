@@ -177,6 +177,17 @@ class RenderTest(unittest.TestCase):
         self.assertEqual(g.ink("#3572a5", "#111111", "#ffffff"), "#ffffff")
         self.assertEqual(g.ink("#663399", "#111111", "#ffffff"), "#ffffff")
 
+    def test_small_project_still_gets_its_name_and_language(self):
+        svg = self.render([
+            data("Big", {"Python": 575000}),
+            data("Mid", {"Rust": 346000}, repo="me/mid"),
+            data("Tiny Project", {"Java": 40000, "Shell": 3000}, repo="me/tiny", note="a note"),
+        ])
+        texts = self.texts(svg)
+        self.assertIn("Tiny Project", texts)
+        self.assertIn("Java", texts)
+        self.assertIn("3 projects", " | ".join(texts))
+
     def test_long_label_never_overflows_its_block(self):
         long = "An extraordinarily long project label that cannot possibly fit"
         svg = self.render([

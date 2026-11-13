@@ -235,14 +235,22 @@ def render(title: str, projects: list[ProjectData], theme: str) -> str:
             f'<rect x="{_n(bx)}" y="{_n(by)}" width="{_n(bw)}" height="{_n(bh)}" rx="8" '
             f'fill="{t["block"]}" stroke="{t["frame"]}"/>'
         )
+        # A block too short for a caption line keeps its name beside the cells instead.
+        beside = "" if captioned or bh < 24 else _fit(data.project.label, bw * 0.6 - 20, 8.4)
         if captioned:
             out.extend(_caption(data, t, bx, by, bw))
+        elif beside:
+            out.append(
+                f'<text x="{_n(bx + 10)}" y="{_n(by + bh / 2 + 5)}" font-size="14" font-weight="700" '
+                f'fill="{t["text"]}">{escape(beside)}</text>'
+            )
         out.append("</g>")
 
         top = 30 if captioned else 6
+        left = 20 + len(beside) * 8.4 if beside else 6
         langs = fold_small(data.langs)
         size = sum(b for _, b in langs)
-        cells = squarify([b for _, b in langs], bx + 6, by + top, bw - 12, bh - top - 6)
+        cells = squarify([b for _, b in langs], bx + left, by + top, bw - left - 6, bh - top - 6)
         for (name, nbytes), (cx, cy, cw, ch) in zip(langs, cells):
             cx, cy, cw, ch = cx + 1.5, cy + 1.5, cw - 3, ch - 3
             if cw <= 0 or ch <= 0:
@@ -271,6 +279,16 @@ def render(title: str, projects: list[ProjectData], theme: str) -> str:
                     out.append(
                         f'<text x="{_n(cx + 10)}" y="{_n(cy + 37)}" font-size="11" '
                         f'fill="{colour}" fill-opacity=".8">{escape(detail)}</text>'
+                    )
+            elif 16 <= ch < 30:
+                # A flat cell has room for one small line.
+                small = next(
+                    (s for s in (name, SHORT_NAMES.get(name)) if s and cw >= len(s) * 6.6 + 12), ""
+                )
+                if small:
+                    out.append(
+                        f'<text x="{_n(cx + 6)}" y="{_n(cy + ch / 2 + 4)}" font-size="11" '
+                        f'font-weight="700" fill="{colour}">{escape(small)}</text>'
                     )
             out.append("</g>")
 

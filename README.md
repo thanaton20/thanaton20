@@ -20,6 +20,9 @@ The map above is drawn from the code in my projects and redraws itself as they g
 - **[Diskscape](https://github.com/thanaton20/diskscape)** — a disk usage analyzer for Windows, macOS and
   Linux: a sortable tree next to a treemap, careful deletion, compatible with ncdu.
   Rust, TypeScript and Svelte.
+- **[Claude in Minecraft](https://github.com/thanaton20/claude-in-minecraft)** — a Fabric mod that passes
+  chat messages to Claude through a small token-protected endpoint inside the mod; Claude reads
+  and answers from a terminal with two shell commands. Java and Bash.
 
 ## Awards
 

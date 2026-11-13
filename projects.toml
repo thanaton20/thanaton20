@@ -12,3 +12,8 @@ note = "team of 5 · 1st place, IBM Qiskit Fall Fest 2026"
 repo = "thanaton20/diskscape"
 label = "Diskscape"
 note = "disk usage analyzer"
+
+[[project]]
+repo = "thanaton20/claude-in-minecraft"
+label = "Claude in Minecraft"
+note = "Fabric mod"
